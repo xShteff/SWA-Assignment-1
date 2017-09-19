@@ -40,6 +40,9 @@
                 </li>-->
             </ul>
             <form class="form-inline my-2 my-lg-0">
+                <span class="invalid-feedback" id="status-invalid" style="margin-right: 20px">
+                    No data!
+                </span>
                 <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" id="search">
             </form>
         </div>
@@ -70,8 +73,29 @@
     </table>
 </body>
 <script>
+    //TODOS:
+    //The application has to allow modification of the model in several different ways.
+    //The application should use classes MVC, 1-way data flow, or 2-way data binding. You are allowed to use 3rd-party frameworks to achieve this.
+    //The application should have a consistent design, including a consistent strategy for using functional elements.
+
+
+    var Utils = {
+        resultToData: function(r) {
+            var name = new Name(r.name.first, r.name.last);
+            var location = new Location(r.location.city, r.location.postcode, r.location.state, r.location.street);
+            var person = new Person(r.login.username, name, r.email, r.phone, location, r.picture.large, r.nat);
+
+            return person;
+        },
+        textFilter: function(r) {
+            var text = $('#search').val();
+            return r.toString().toLowerCase().indexOf(text.toLowerCase()) != -1;
+        }
+    }
+
     class Person {
-        constructor(name, email, phone, address, picture, nationality) {
+        constructor(id, name, email, phone, address, picture, nationality) {
+            this.id = id;
             this.name = name;
             this.email = email;
             this.phone = phone;
@@ -81,22 +105,9 @@
         }
 
         toString() {
-            return `${this.name.toString} ${this.email} ${this.phone} ${this.address.toString()} ${this.nationality}`
+            return `${this.name.toString()} ${this.email} ${this.phone} ${this.address.toString()} ${this.nationality}`
         }
     }
-
-    var resultToData = function(r) {
-        var name = new Name(r.name.first, r.name.last);
-        var location = new Location(r.location.city, r.location.postcode, r.location.state, r.location.street);
-        var person = new Person(name, r.email, r.phone, location, r.picture.large, r.nat);
-
-        return person;
-    }
-
-    /* var textFilter = function(r) {
-         var text = $('#search').val();
-         return r.name.toString();
-     }*/
 
     class Name {
         constructor(firstname, lastname) {
@@ -129,11 +140,10 @@
         initData() {
             var self = this;
             $.ajax({
-                url: 'https://randomuser.me/api/?nat=dk,gb,us&inc=name,phone,email,location,picture,nat&results=20',
+                url: 'https://randomuser.me/api/?nat=dk,gb,us&inc=name,phone,email,location,picture,login,nat&results=20',
                 dataType: 'json',
                 success: function(r) {
-                    console.log(r);
-                    self.data = r.results.map(resultToData);
+                    self.data = r.results.map(Utils.resultToData);
                     self.initTable();
                 }
             });
@@ -141,7 +151,9 @@
         initTable() {
             var self = this;
             for (var i = 0; i < this.data.length; i++) {
-                var tr = $("<tr>");
+                var tr = $("<tr>").attr({
+                    id: this.data[i].id
+                });
                 var img = $("<img>").attr({
                     'src': this.data[i].picture
                 }).css({
@@ -166,6 +178,21 @@
 
     var x = new Table();
     x.initData();
+
+    $('#search').keyup(function() {
+        var leftover = x.data.filter(Utils.textFilter);
+        if (leftover.length === 0 && $("#search").val().length !== 0) {
+            $('#status-invalid').show();
+            $('#data tbody tr').show();
+        } else {
+            $('#data tbody tr').hide();
+            for (var i = 0; i < leftover.length; i++)
+                $(`#${leftover[i].id}`).show();
+
+            $('#status-invalid').hide()
+        }
+
+    });
 </script>
 
 </html>
