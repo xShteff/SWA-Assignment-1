@@ -5,6 +5,8 @@
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <script language="javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
+    <script src="app.js"></script>
     <title>SWA Assignment</title>
     <style>
         html,
@@ -21,7 +23,8 @@
     </style>
 </head>
 
-<body>
+<body ng-app="employeeListApp">
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -47,161 +50,29 @@
             </form>
         </div>
     </nav>
-    <table id="data" class="table table-sm table-striped table-inverse">
+    <table ng-controller="EmployeeListController" class="table table-sm table-striped table-inverse">
         <thead>
             <tr>
-                <th>
-                    Image
-                </th>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Phone Number
-                </th>
-                <th>
-                    E-Mail
-                </th>
-                <th>
-                    Address
-                </th>
-                <th>
-                    Salary
-                </th>
-                <th>
-                    Actions
-                </th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>E-Mail</th>
+                <th>Address</th>
+                <th>Salary</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-
+            <tr ng-repeat="employee in employees()">
+                <td><img src="{{employee.picture}}"></td>
+                <td>{{employee.name}}</td>
+                <td>{{employee.phone}}</td>
+                <td>{{employee.email}}</td>
+                <td>{{employee.address}}</td>
+                <td>{{employee.salary}}</td>
+            </tr>
         </tbody>
     </table>
 </body>
-<script>
-    //TODOS:
-    //The application has to allow modification of the model in several different ways.
-    //The application should use classes MVC, 1-way data flow, or 2-way data binding. You are allowed to use 3rd-party frameworks to achieve this.
-    //The application should have a consistent design, including a consistent strategy for using functional elements.
-
-
-    var Utils = {
-        resultToData: function(r) {
-            var salary = (parseInt(Math.floor(Math.random() * 40) + 10)) * 1000;
-            var name = new Name(r.name.first, r.name.last);
-            var location = new Location(r.location.city, r.location.postcode, r.location.state, r.location.street);
-            var person = new Person(r.login.username, name, r.email, r.phone, location, r.picture.large, r.nat, salary);
-
-            return person;
-        },
-        textFilter: function(r) {
-            var text = $('#search').val();
-            return r.toString().toLowerCase().indexOf(text.toLowerCase()) != -1;
-        }
-    }
-
-    class Person {
-        constructor(id, name, email, phone, address, picture, nationality, salary) {
-            this.id = id;
-            this.name = name;
-            this.email = email;
-            this.phone = phone;
-            this.address = address;
-            this.picture = picture;
-            this.nationality = nationality;
-            this.salary = salary;
-        }
-
-        toString() {
-            return `${this.name.toString()} ${this.email} ${this.phone} ${this.address.toString()} ${this.nationality} ${this.salary}`
-        }
-    }
-
-    class Name {
-        constructor(firstname, lastname) {
-            this.firstname = firstname;
-            this.lastname = lastname;
-        }
-
-        toString() {
-            return `${this.firstname.charAt(0).toUpperCase() + this.firstname.slice(1)} ${this.lastname.charAt(0).toUpperCase() + this.lastname.slice(1)}`;
-        }
-    }
-
-    class Location {
-        constructor(city, postcode, state, street) {
-            this.city = city;
-            this.postcode = postcode;
-            this.state = state;
-            this.street = street;
-        }
-
-        toString() {
-            return `${this.postcode}, ${this.city}, ${this.state}, ${this.street}`;
-        }
-    }
-
-    class Table {
-        constructor() {
-            this.data = [];
-        }
-        initData() {
-            var self = this;
-            $.ajax({
-                url: 'https://randomuser.me/api/?nat=dk,gb,us&inc=name,phone,email,location,picture,login,nat&results=20',
-                dataType: 'json',
-                success: function(r) {
-                    self.data = r.results.map(Utils.resultToData);
-                    self.initTable();
-                }
-            });
-        }
-        initTable() {
-            var self = this;
-            for (var i = 0; i < this.data.length; i++) {
-                var tr = $("<tr>").attr({
-                    id: this.data[i].id
-                });
-                var img = $("<img>").attr({
-                    'src': this.data[i].picture
-                }).css({
-                    'height': '50px'
-                });
-                var td0 = $("<td>").append(img);
-                var td1 = $("<td>").text(this.data[i].name.toString());
-                var td2 = $("<td>").text(this.data[i].phone);
-                var td3 = $("<td>").text(this.data[i].email);
-                var flagimg = $("<img>").attr({
-                    'src': `https://lipis.github.io/flag-icon-css/flags/4x3/${this.data[i].nationality.toLowerCase()}.svg`,
-                    title: this.data[i].nationality
-                }).css({
-                    'height': '15px'
-                });
-                var td4 = $("<td>").text(` ${this.data[i].address}`).prepend(flagimg);
-                var td5 = $("<td>").text(`$${this.data[i].salary}`);
-                tr.append(td0).append(td1).append(td2).append(td3).append(td4).append(td5);
-                $('#data tbody').append(tr);
-            }
-        }
-    }
-
-    var x = new Table();
-    x.initData();
-
-    $('#search').keyup(function() {
-        var leftover = x.data.filter(Utils.textFilter);
-        if (leftover.length === 0 && $("#search").val().length !== 0) {
-            $('#status-invalid').show();
-            $('#data tbody tr').show();
-        } else {
-            $('#data tbody tr').hide();
-            for (var i = 0; i < leftover.length; i++)
-                $(`#${leftover[i].id}`).show();
-
-            $('#status-invalid').hide()
-        }
-
-    });
-</script>
 
 </html>
