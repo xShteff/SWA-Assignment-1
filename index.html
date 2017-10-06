@@ -65,6 +65,12 @@
                 <th>
                     Address
                 </th>
+                <th>
+                    Salary
+                </th>
+                <th>
+                    Actions
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -81,9 +87,10 @@
 
     var Utils = {
         resultToData: function(r) {
+            var salary = (parseInt(Math.floor(Math.random() * 40) + 10)) * 1000;
             var name = new Name(r.name.first, r.name.last);
             var location = new Location(r.location.city, r.location.postcode, r.location.state, r.location.street);
-            var person = new Person(r.login.username, name, r.email, r.phone, location, r.picture.large, r.nat);
+            var person = new Person(r.login.username, name, r.email, r.phone, location, r.picture.large, r.nat, salary);
 
             return person;
         },
@@ -94,7 +101,7 @@
     }
 
     class Person {
-        constructor(id, name, email, phone, address, picture, nationality) {
+        constructor(id, name, email, phone, address, picture, nationality, salary) {
             this.id = id;
             this.name = name;
             this.email = email;
@@ -102,10 +109,11 @@
             this.address = address;
             this.picture = picture;
             this.nationality = nationality;
+            this.salary = salary;
         }
 
         toString() {
-            return `${this.name.toString()} ${this.email} ${this.phone} ${this.address.toString()} ${this.nationality}`
+            return `${this.name.toString()} ${this.email} ${this.phone} ${this.address.toString()} ${this.nationality} ${this.salary}`
         }
     }
 
@@ -170,7 +178,8 @@
                     'height': '15px'
                 });
                 var td4 = $("<td>").text(` ${this.data[i].address}`).prepend(flagimg);
-                tr.append(td0).append(td1).append(td2).append(td3).append(td4);
+                var td5 = $("<td>").text(`$${this.data[i].salary}`);
+                tr.append(td0).append(td1).append(td2).append(td3).append(td4).append(td5);
                 $('#data tbody').append(tr);
             }
         }
