@@ -62,4 +62,9 @@ employeeListApp.controller('EmployeeListController', function EmployeeListContro
             }
         });
     }
+    $scope.addEmployee = function(user) {
+        console.log(user);
+        $scope.employees.push(user);
+        $scope.user = {};
+    }
 });
