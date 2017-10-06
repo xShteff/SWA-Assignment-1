@@ -19,8 +19,8 @@ class Person {
 
 class Name {
     constructor(firstName, lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+        this.lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1);
     }
 
     toString() {
@@ -41,22 +41,21 @@ class Location {
     }
 }
 
-function randomUserToPerson(user) {
-    var salary = (parseInt(Math.floor(Math.random() * 40) + 10)) * 1000;
-    var name = new Name(user.name.first, user.name.last);
-    var location = new Location(user.location.city, user.location.postcode, user.location.state, user.location.street)
-    var person = new Person(user.login.username, name, user.email, user.phone, location, user.picture.large, user.nat, salary);
-    return person;
-}
-
 employeeListApp.controller('EmployeeListController', function EmployeeListController($scope) {
+    $scope.randomUserToPerson = function(user) {
+        var salary = (parseInt(Math.floor(Math.random() * 40) + 10)) * 1000;
+        var name = new Name(user.name.first, user.name.last);
+        var location = new Location(user.location.city, user.location.postcode, user.location.state, user.location.street)
+        var person = new Person(user.login.username, name, user.email, user.phone, location, user.picture.large, user.nat, salary);
+        return person;
+    }
     $scope.employees = [];
     $scope.LoadData = function () {
         $.ajax({
             url: 'https://randomuser.me/api/?nat=dk,gb,us&inc=name,phone,email,location,picture,login,nat&results=20',
             dataType: 'json',
             success: function (r) {
-                var data = r.results.map(randomUserToPerson);
+                var data = r.results.map($scope.randomUserToPerson);
                 $scope.employees = data;
                 $scope.$apply();
             }
@@ -64,7 +63,7 @@ employeeListApp.controller('EmployeeListController', function EmployeeListContro
     }
     $scope.addEmployee = function(user) {
         console.log(user);
-        $scope.employees.push(user);
+        $scope.employees.push($scope.randomUserToPerson(user));
         $scope.user = {};
     }
 });
