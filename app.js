@@ -18,11 +18,11 @@ class Person {
 }
 
 employeeListApp.controller('EmployeeListController', function EmployeeListController($scope) {
-  $scope.employees = function getEmployees(){
-      var user = new Person(6, 'David', "sadas", "asdas", "waht ever", "http://i0.kym-cdn.com/entries/icons/mobile/000/013/564/doge.jpg", "asdasd", 65000);
-      var data = [];
-      data.push(user);
-      console.log(data);
-      return data;
-  }
+    $scope.employees = [];
+
+    $scope.addEmployee = function(user) {
+        console.log(user);
+        $scope.employees.push(user);
+        $scope.user = {};
+    }
 });
