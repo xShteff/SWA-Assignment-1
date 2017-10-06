@@ -50,7 +50,7 @@
             </form>
         </div>
     </nav>
-    <table ng-controller="EmployeeListController" class="table table-sm table-striped table-inverse">
+    <table ng-controller="EmployeeListController" ng-init="LoadData()" class="table table-sm table-striped table-inverse">
         <thead>
             <tr>
                 <th>Image</th>
@@ -63,12 +63,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="employee in employees()">
-                <td><img src="{{employee.picture}}"></td>
-                <td>{{employee.name}}</td>
+            <tr ng-repeat="employee in employees">
+                <td><img ng-src="{{employee.picture}}" style="height:20px;"></td>
+                <td>{{employee.name.firstName}} {{employee.name.lirstName}}</td>
                 <td>{{employee.phone}}</td>
                 <td>{{employee.email}}</td>
-                <td>{{employee.address}}</td>
+                <td>{{employee.address.state}}</td>
                 <td>{{employee.salary}}</td>
             </tr>
         </tbody>
