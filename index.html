@@ -44,7 +44,7 @@
                 <span class="invalid-feedback" id="status-invalid" style="margin-right: 20px">
                     No data!
                 </span>
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" id="search">
+                <input ng-model="filterText" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" id="search">
             </form>
         </div>
     </nav>
@@ -61,7 +61,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="employee in employees">
+            <tr ng-repeat="employee in employees | filterEmployees:filterText">
                 <td><img ng-src="{{employee.picture}}" style="height:20px;"></td>
                 <td>{{employee.name.firstName}} {{employee.name.lastName}}</td>
                 <td>{{employee.phone}}</td>

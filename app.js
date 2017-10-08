@@ -13,7 +13,7 @@ class Person {
     }
 
     toString() {
-        return '${this.name.toString()} ${this.email} ${this.phone} ${this.address.toString()} ${this.nationality} ${this.salary}'
+        return `${this.name.toString()} ${this.email} ${this.phone} ${this.address.toString()} ${this.nationality} ${this.salary}`
     }
 }
 
@@ -24,7 +24,7 @@ class Name {
     }
 
     toString() {
-        return '${this.firstName.charAt(0).toUpperCase() + this.firstName.slice(1)} ${this.lastName.charAt(0).toUpperCase() + this.lastName.slice(1)}'
+        return `${this.firstName.charAt(0).toUpperCase() + this.firstName.slice(1)} ${this.lastName.charAt(0).toUpperCase() + this.lastName.slice(1)}`
     }
 }
 
@@ -37,9 +37,20 @@ class Location {
     }
 
     toString() {
-        return '${this.postcode}, ${this.city}, ${this.state}, ${this.street}'
+        return `${this.postcode}, ${this.city}, ${this.state}, ${this.street}`
     }
 }
+
+employeeListApp.filter('filterEmployees', function(){
+    return function(employees, letter){
+        if (letter === undefined){
+            return employees;
+        }
+        return employees.filter(function(employee){
+            return employee.toString().toLowerCase().includes(letter);
+        });
+    }
+});
 
 employeeListApp.controller('EmployeeListController', function EmployeeListController($scope) {
     $scope.randomUserToPerson = function(user) {
@@ -66,4 +77,5 @@ employeeListApp.controller('EmployeeListController', function EmployeeListContro
         $scope.employees.push($scope.randomUserToPerson(user));
         $scope.user = {};
     }
+
 });
