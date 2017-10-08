@@ -62,11 +62,13 @@
         </thead>
         <tbody>
             <tr ng-repeat="employee in employees | filterEmployees:filterText">
-                <td><img ng-src="{{employee.picture}}" style="height:20px;"></td>
+                <td>
+                    <div style="width:40px; height:40px;background:url('{{employee.picture}}');background-size: 100%; background-repeat:no-repeat;"></div>
+                </td>
                 <td>{{employee.name.firstName}} {{employee.name.lastName}}</td>
                 <td>{{employee.phone}}</td>
                 <td>{{employee.email}}</td>
-                <td>{{employee.address.state}}</td>
+                <td><img src="{{getFlagUrl(employee.nationality)}}" style='height:20px;'> {{employee.address.postcode}} {{employee.address.city}} {{employee.address.state}} {{employee.address.street}}</td>
                 <td>{{employee.salary}}</td>
                 <td><button class="btn btn-danger" ng-click="removeEmployee(employee.id)">Remove</button></td>
             </tr>
@@ -157,14 +159,14 @@
                         </span>
                         <div class="input-group">
                             <span class="input-group-addon">Picture URL*</span>
-                            <input ng-model="user.picture" name="picture" type="text" class="form-control" id="input-picture" placeholder="Enter Picture URL" required>
+                            <input ng-model="user.picture.large" name="picture" type="text" class="form-control" id="input-picture" placeholder="Enter Picture URL" required>
                         </div>
                         <span style="color:red" ng-show="fieldValidation('nat')">
                             <span ng-show="addUserForm.username.$error.required">Nationality is required.</span>
                         </span>
                         <div class="input-group">
                             <span class="input-group-addon">Nationality*</span>
-                            <select class="form-control" name="nat" id="input-nat" ng-model="user.nationality" required>
+                            <select class="form-control" name="nat" id="input-nat" ng-model="user.nat" required>
                                 <option>DK</option>
                                 <option>UK</option>
                                 <option>SK</option>

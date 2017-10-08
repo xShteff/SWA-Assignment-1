@@ -62,7 +62,6 @@ employeeListApp.controller('EmployeeListController', function EmployeeListContro
     };
     $scope.employees = [];
     $scope.getFlagUrl = function(nationality) {
-        console.log(nationality);
         return `https://lipis.github.io/flag-icon-css/flags/4x3/${nationality.toLowerCase()}.svg`;
     };
     $scope.totalSalary = function() {
