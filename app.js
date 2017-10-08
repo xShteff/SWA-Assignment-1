@@ -84,15 +84,6 @@ employeeListApp.controller('EmployeeListController', function EmployeeListContro
     $scope.fieldValidation = function(key) {
         return $scope.addUserForm[key].$invalid;
     };
-    $scope.addEmployeeValidation = function() {
-        var invalidKeys = [];
-        $.each($scope.addUserForm, function(key) {
-            if (key.charAt(0) != "$")
-                if ($scope.addUserForm[key].$invalid)
-                    invalidKeys.push(key);
-        });
-        return (invalidKeys.length) ? true : false;
-    };
     $scope.addEmployee = function(user) {
         $scope.employees.push($scope.randomUserToPerson(user));
         $scope.user = {};
