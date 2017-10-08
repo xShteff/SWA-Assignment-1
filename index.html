@@ -64,7 +64,7 @@
                 <td>{{employee.phone}}</td>
                 <td>{{employee.email}}</td>
                 <td><img src="{{getFlagUrl(employee.nationality)}}" style='height:20px;'> {{employee.address.postcode}} {{employee.address.city}} {{employee.address.state}} {{employee.address.street}}</td>
-                <td>{{employee.salary}}</td>
+                <td>{{employee.salary}} $</td>
                 <td><button class="btn btn-danger" ng-click="removeEmployee(employee.id)">Remove</button></td>
             </tr>
         </tbody>
