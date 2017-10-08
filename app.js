@@ -70,7 +70,7 @@ employeeListApp.controller('EmployeeListController', function EmployeeListContro
             salaries.push($scope.employees[i].salary);
         return (salaries.length) ? salaries.reduce(function(sum, value) { return sum + value; }) : 0;
     };
-    $scope.LoadData = function() {
+    $scope.loadData = function() {
         var numberOfEmployees = Math.floor(Math.random() * (40 - 20) + 20);
         $.ajax({
             url: `https://randomuser.me/api/?nat=dk,gb,us&inc=name,phone,email,location,picture,login,nat&results=${numberOfEmployees}`,
