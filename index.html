@@ -85,80 +85,57 @@
                 </div>
                 <div class="modal-body">
                     <form name="addUserForm">
-                        <span style="color:red" ng-show="fieldValidation('username')">
-                                <span ng-show="addUserForm.username.$error.required">Username is required.</span>
-                        </span>
+                        <span style="color:red" ng-show="fieldValidation('username')">Username is required.</span>
                         <div class="input-group">
                             <span class="input-group-addon">Username*</span>
                             <input ng-model="user.login.username" name="username" type="text" class="form-control" id="input-name" placeholder="Enter Username" required>
                         </div>
-                        <span style="color:red" ng-show="fieldValidation('fistname')">
-                            <span ng-show="addUserForm.fistname.$error.required">First Name is required.</span>
-                        </span>
+                        <span style="color:red" ng-show="fieldValidation('fistname')">First Name is required.</span>
                         <div class="input-group">
                             <span class="input-group-addon">First Name*</span>
                             <input ng-model="user.name.first" name="fistname" type="text" class="form-control" id="input-name" placeholder="Enter First Name" required>
                         </div>
-                        <span style="color:red" ng-show="fieldValidation('lastname')">
-                            <span ng-show="addUserForm.lastname.$error.required">Last Name is required.</span>
-                        </span>
+                        <span style="color:red" ng-show="fieldValidation('lastname')">Last Name is required.</span>
                         <div class="input-group">
                             <span class="input-group-addon">Last Name*</span>
                             <input ng-model="user.name.last" name="lastname" type="text" class="form-control" id="input-name" placeholder="Enter Last Name" required>
                         </div>
-                        <span style="color:red" ng-show="fieldValidation('email')">
-                            <span ng-show="addUserForm.email.$error.required">Email is required.</span>
-                        </span>
+                        <span style="color:red" ng-show="fieldValidation('email')">Email is required.</span>
                         <div class="input-group">
                             <span class="input-group-addon">Email*</span>
                             <input ng-model="user.email" name="email" type="email" class="form-control" id="input-email" placeholder="Enter Email" required>
                         </div>
-                        <span style="color:red" ng-show="fieldValidation('phone')">
-                            <span ng-show="addUserForm.phone.$error.required">Phone Number is required.</span>
-                        </span>
+                        <span style="color:red" ng-show="fieldValidation('phone')">Phone Number is required.</span>
                         <div class="input-group">
                             <span class="input-group-addon">Phone Number*</span>
                             <input ng-model="user.phone" name="phone" type="text" class="form-control" id="input-phone" placeholder="Enter Phone Number" required>
                         </div>
-                        <span style="color:red" ng-show="fieldValidation('city')">
-                            <span ng-show="addUserForm.city.$error.required">City is required.</span>
-                        </span>
+                        <span style="color:red" ng-show="fieldValidation('city')">City is required.</span>
                         <div class="input-group">
                             <span class="input-group-addon">City*</span>
                             <input ng-model="user.location.city" name="city" type="text" class="form-control" id="input-city" placeholder="Enter City" required>
-
                         </div>
-                        <span style="color:red" ng-show="fieldValidation('postcode')">
-                            <span ng-show="addUserForm.postcode.$error.required">Postcode is required.</span>
-                        </span>
+                        <span style="color:red" ng-show="fieldValidation('postcode')">Postcode is required.</span>
                         <div class="input-group">
                             <span class="input-group-addon">Postcode*</span>
                             <input ng-model="user.location.postcode" name="postcode" type="text" class="form-control" id="input-postcode" placeholder="Enter Postcode" required>
                         </div>
-                        <span style="color:red" ng-show="fieldValidation('state')">
-                            <span ng-show="addUserForm.state.$error.required">State is required.</span>
-                        </span>
+                        <span style="color:red" ng-show="fieldValidation('state')">State is required.</span>
                         <div class="input-group">
                             <span class="input-group-addon">State*</span>
                             <input ng-model="user.location.state" name="state" type="text" class="form-control" id="input-state" placeholder="Enter State" required>
                         </div>
-                        <span style="color:red" ng-show="fieldValidation('street')">
-                            <span ng-show="addUserForm.street.$error.required">Street is required.</span>
-                        </span>
+                        <span style="color:red" ng-show="fieldValidation('street')">Street is required.</span>
                         <div class="input-group">
                             <span class="input-group-addon">Street*</span>
                             <input ng-model="user.location.street" name="street" type="text" class="form-control" id="input-street" placeholder="Enter Street" required>
                         </div>
-                        <span style="color:red" ng-show="fieldValidation('picture')">
-                            <span ng-show="addUserForm.picture.$error.required">Picture URL is required.</span>
-                        </span>
+                        <span style="color:red" ng-show="fieldValidation('picture')">Picture URL is required.</span>
                         <div class="input-group">
                             <span class="input-group-addon">Picture URL*</span>
                             <input ng-model="user.picture.large" name="picture" type="text" class="form-control" id="input-picture" placeholder="Enter Picture URL" required>
                         </div>
-                        <span style="color:red" ng-show="fieldValidation('nat')">
-                            <span ng-show="addUserForm.username.$error.required">Nationality is required.</span>
-                        </span>
+                        <span style="color:red" ng-show="fieldValidation('nat')">Nationality is required.</span>
                         <div class="input-group">
                             <span class="input-group-addon">Nationality*</span>
                             <select class="form-control" name="nat" id="input-nat" ng-model="user.nat" required>
@@ -168,9 +145,7 @@
                                 <option>RO</option>
                             </select>
                         </div>
-                        <span style="color:red" ng-show="fieldValidation('salary')">
-                            <span ng-show="addUserForm.salary.$error.required">Salary is required.</span>
-                        </span>
+                        <span style="color:red" ng-show="fieldValidation('salary')">Salary is required.</span>
                         <div class="input-group">
                             <span class="input-group-addon">Salary*</span>
                             <input ng-model="user.salary" name="salary" type="number" class="form-control" id="input-salary" placeholder="Enter Salary" required>
