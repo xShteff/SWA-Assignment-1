@@ -1,4 +1,7 @@
 ## SWA Assignment 1
+
+Application is hosted [here!](https://xshteff.github.io/SWA-Assignment-1/)
+
 - The application should be client only.
 - The application should only have one HTML page.
 - The application should maintain a model with several kinds of objects
