@@ -1,13 +1,10 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
     <script language="javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
     <script src="app.js"></script>
     <title>SWA Assignment</title>
@@ -19,7 +16,7 @@
             height: 100%;
             width: 100%;
         }
-
+        
         #data tbody tr td {
             line-height: 50px;
         }
@@ -29,15 +26,14 @@
 <body ng-app="employeeListApp" ng-controller="EmployeeListController">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
-            aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
             <a class="navbar-brand" href="#">SWA</a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal" href="#">Link</a>
+                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal" href="#">Add Employee</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -68,8 +64,14 @@
                 <td>{{employee.email}}</td>
                 <td>{{employee.address.state}}</td>
                 <td>{{employee.salary}}</td>
+                <td><button class="btn btn-danger" ng-click="removeEmployee(employee.id)">Remove</button></td>
             </tr>
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="7" class="text-center">Total Salaries: {{totalSalary()}}, Employee count: {{employees.length}}</td>
+            </tr>
+        </tfoot>
     </table>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -81,54 +83,90 @@
               </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form name="addUserForm">
                         <div class="form-group">
-                            <label for="input-name">Username</label>
-                            <input ng-model="user.login.username" type="text" class="form-control" id="input-name" placeholder="Enter email">
+                            <label for="input-name">Username*</label>
+                            <input ng-model="user.login.username" name="username" type="text" class="form-control" id="input-name" placeholder="Enter Username" required>
+                            <span style="color:red" ng-show="fieldValidation('username')">
+                                <span ng-show="addUserForm.username.$error.required">Username is required.</span>
+                            </span>
                         </div>
                         <div class="form-group">
-                            <label for="input-name">First Name</label>
-                            <input ng-model="user.name.first" type="text" class="form-control" id="input-name" placeholder="Enter email">
+                            <label for="input-name">First Name*</label>
+                            <input ng-model="user.name.first" name="fistname" type="text" class="form-control" id="input-name" placeholder="Enter First Name" required>
+                            <span style="color:red" ng-show="fieldValidation('fistname')">
+                                <span ng-show="addUserForm.username.$error.required">First Name is required.</span>
+                            </span>
                         </div>
                         <div class="form-group">
-                            <label for="input-name">Last Name</label>
-                            <input ng-model="user.name.last" type="text" class="form-control" id="input-name" placeholder="Enter email">
+                            <label for="input-name">Last Name*</label>
+                            <input ng-model="user.name.last" name="lastname" type="text" class="form-control" id="input-name" placeholder="Enter Last Name" required>
+                            <span style="color:red" ng-show="fieldValidation('lastname')">
+                                <span ng-show="addUserForm.username.$error.required">Last Name is required.</span>
+                            </span>
                         </div>
                         <div class="form-group">
-                            <label for="input-email">Email</label>
-                            <input ng-model="user.email" type="email" class="form-control" id="input-email" placeholder="Enter email">
+                            <label for="input-email">Email*</label>
+                            <input ng-model="user.email" name="email" type="email" class="form-control" id="input-email" placeholder="Enter Email" required>
+                            <span style="color:red" ng-show="fieldValidation('email')">
+                                <span ng-show="addUserForm.username.$error.required">Email is required.</span>
+                            </span>
                         </div>
                         <div class="form-group">
-                            <label for="input-phone">Phone Number</label>
-                            <input ng-model="user.phone" type="text" class="form-control" id="input-phone" placeholder="Enter email">
+                            <label for="input-phone">Phone Number*</label>
+                            <input ng-model="user.phone" name="phone" type="text" class="form-control" id="input-phone" placeholder="Enter Phone Number" required>
+                            <span style="color:red" ng-show="fieldValidation('phone')">
+                                <span ng-show="addUserForm.username.$error.required">Phone Number is required.</span>
+                            </span>
                         </div>
                         <div class="form-group">
-                            <label for="input-address">City</label>
-                            <input ng-model="user.location.city" type="text" class="form-control" id="input-address" placeholder="Enter email">
-                            <label for="input-address">Postcode</label>
-                            <input ng-model="user.location.postcode" type="text" class="form-control" id="input-address" placeholder="Enter email">
-                            <label for="input-address">State</label>
-                            <input ng-model="user.location.state" type="text" class="form-control" id="input-address" placeholder="Enter email">
-                            <label for="input-address">Street</label>
-                            <input ng-model="user.location.street" type="text" class="form-control" id="input-address" placeholder="Enter email">
+                            <label for="input-city">City*</label>
+                            <input ng-model="user.location.city" name="city" type="text" class="form-control" id="input-city" placeholder="Enter City" required>
+                            <span style="color:red" ng-show="fieldValidation('city')">
+                                <span ng-show="addUserForm.username.$error.required">City is required.</span>
+                            </span><br>
+                            <label for="input-postcode">Postcode*</label>
+                            <input ng-model="user.location.postcode" name="postcode" type="text" class="form-control" id="input-postcode" placeholder="Enter Postcode" required>
+                            <span style="color:red" ng-show="fieldValidation('postcode')">
+                                <span ng-show="addUserForm.username.$error.required">Postcode is required.</span>
+                            </span><br>
+                            <label for="input-state">State*</label>
+                            <input ng-model="user.location.state" name="state" type="text" class="form-control" id="input-state" placeholder="Enter State" required>
+                            <span style="color:red" ng-show="fieldValidation('state')">
+                                <span ng-show="addUserForm.username.$error.required">State is required.</span>
+                            </span><br>
+                            <label for="input-street">Street*</label>
+                            <input ng-model="user.location.street" name="street" type="text" class="form-control" id="input-street" placeholder="Enter Street" required>
+                            <span style="color:red" ng-show="fieldValidation('street')">
+                                <span ng-show="addUserForm.username.$error.required">Street is required.</span>
+                            </span>
                         </div>
                         <div class="form-group">
-                            <label for="input-picture">Picture URL</label>
-                            <input ng-model="user.picture" type="text" class="form-control" id="input-picture" placeholder="Enter email">
+                            <label for="input-picture">Picture URL*</label>
+                            <input ng-model="user.picture" name="picture" type="text" class="form-control" id="input-picture" placeholder="Enter Picture URL" required>
+                            <span style="color:red" ng-show="fieldValidation('picture')">
+                                <span ng-show="addUserForm.username.$error.required">Picture URL is required.</span>
+                            </span>
                         </div>
                         <div class="form-group">
-                            <label for="input-nat">Nationality</label>
-                            <input ng-model="user.nationality" type="text" class="form-control" id="input-nat" placeholder="Enter email">
+                            <label for="input-nat">Nationality*</label>
+                            <input ng-model="user.nationality" name="nat" type="text" class="form-control" id="input-nat" placeholder="Enter Nationality" required>
+                            <span style="color:red" ng-show="fieldValidation('nat')">
+                                <span ng-show="addUserForm.username.$error.required">Nationality is required.</span>
+                            </span>
                         </div>
                         <div class="form-group">
-                            <label for="input-salary">Salary</label>
-                            <input ng-model="user.salary" type="text" class="form-control" id="input-salary" placeholder="Enter email">
+                            <label for="input-salary">Salary*</label>
+                            <input ng-model="user.salary" name="salary" type="number" class="form-control" id="input-salary" placeholder="Enter Salary" required>
+                            <span style="color:red" ng-show="fieldValidation('salary')">
+                                <span ng-show="addUserForm.username.$error.required">Salary is required.</span>
+                            </span>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" ng-click="addEmployee(user)">Submit</button>
+                    <button type="button" class="btn btn-primary" ng-disabled="addEmployeeValidation()" ng-click="addEmployee(user)" disabled>Submit</button>
                 </div>
             </div>
         </div>
