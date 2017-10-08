@@ -41,12 +41,12 @@ class Location {
     }
 }
 
-employeeListApp.filter('filterEmployees', function(){
-    return function(employees, letter){
-        if (letter === undefined){
+employeeListApp.filter('filterEmployees', function() {
+    return function(employees, letter) {
+        if (letter === undefined) {
             return employees;
         }
-        return employees.filter(function(employee){
+        return employees.filter(function(employee) {
             return employee.toString().toLowerCase().includes(letter);
         });
     }
@@ -61,6 +61,10 @@ employeeListApp.controller('EmployeeListController', function EmployeeListContro
         return person;
     };
     $scope.employees = [];
+    $scope.getFlagUrl = function(nationality) {
+        console.log(nationality);
+        return `https://lipis.github.io/flag-icon-css/flags/4x3/${nationality.toLowerCase()}.svg`;
+    };
     $scope.totalSalary = function() {
         var salaries = [];
         for (var i = 0; i < $scope.employees.length; i++)
@@ -79,7 +83,7 @@ employeeListApp.controller('EmployeeListController', function EmployeeListContro
         });
     };
     $scope.fieldValidation = function(key) {
-        return $scope.addUserForm[key].$invalid && $scope.addUserForm[key].$dirty;
+        return $scope.addUserForm[key].$invalid;
     };
     $scope.addEmployeeValidation = function() {
         var invalidKeys = [];
